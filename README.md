@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Customer Support Agent (ACSA)
 
-## Getting Started
+This is a complete, working, full-stack web application designed to serve as a customer support agent. It uses a RAG (Retrieval-Augmented Generation) approach to answer user questions against an uploaded knowledge base.
 
-First, run the development server:
+*Note: This specific deployment uses local memory Mock stores since API keys were not available, but the architecture reflects a scalable design.*
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Problem / Solution
+**Problem:** Companies have extensive knowledge bases, but customers still struggle to find answers or contact support waitlists for simple questions.
+**Solution:** ACSA provides a clean, modern, and instant conversational AI interface. You simply upload documents (.pdf, .txt, .md), and the system automatically chunks and indexes the content, enabling a fast and responsive helpdesk experience.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tech Stack
+- Next.js 14 (App Router)
+- TypeScript
+- Tailwind CSS
+- shadcn/ui
+- Pinecone (Configured via mock layer for offline/free use)
+- OpenAI GPT-4o-mini & Embeddings (Configured via Vercel AI SDK mock layers for offline/free use)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Features
+- **Admin Dashboard:** Drag-and-drop or select file uploads handling PDFs, text, and markdown files.
+- **RAG Pipeline:** Intelligent chunking of documents (500 tokens / 50 overlap) and semantic retrieval.
+- **Chat Interface:** Polished, responsive conversational UI with chat history streaming.
+- **Live Metrics Setup:** Sidebar displaying the total knowledge base components loaded.
+- **Dark Mode:** Beautiful deep dark UI tailored for a modern SaaS feel.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Local Setup
 
-## Learn More
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/abdulrazzak10/acsa-ai-support-agent.git
+   cd acsa-ai-support-agent
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+3. **Run the development server**
+   ```bash
+   npm run dev
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment
+This project is configured out-of-the-box for [Vercel](https://vercel.com).
+1. Push your code to your GitHub repo.
+2. Go to Vercel, click "Add New Project", and select this repository.
+3. Vercel will automatically build and deploy it globally.
 
-## Deploy on Vercel
+## Live Demo
+[Live Demo Link (Update upon deployment)]
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Author
+Built by Abdul Razzak Ghouri
