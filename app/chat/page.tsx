@@ -1,7 +1,7 @@
 "use client";
 
 import { useChat } from '@ai-sdk/react';
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import { ChatMessage } from '@/components/ChatMessage';
 import MetricsSidebar from '@/components/MetricsSidebar';
 import { Button } from '@/components/ui/button';
@@ -11,15 +11,25 @@ import { Send, ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
 
 export default function ChatPage() {
-  const { messages, input, handleInputChange, handleSubmit, isLoading } = useChat({
+  const { messages, append, isLoading } = useChat({
     api: '/api/chat',
   });
   
+  const [localInput, setLocalInput] = useState('');
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
+
+  const handleManualSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!localInput.trim() || isLoading) return;
+    
+    const content = localInput;
+    setLocalInput('');
+    append({ role: 'user', content });
+  };
 
   return (
     <div className="flex h-screen overflow-hidden bg-background">
@@ -70,14 +80,14 @@ export default function ChatPage() {
         </ScrollArea>
 
         <div className="p-4 bg-background border-t">
-          <form onSubmit={handleSubmit} className="flex gap-4 max-w-3xl mx-auto">
+          <form onSubmit={handleManualSubmit} className="flex gap-4 max-w-3xl mx-auto">
             <Input
-              value={input}
-              onChange={handleInputChange}
+              value={localInput}
+              onChange={(e) => setLocalInput(e.target.value)}
               placeholder="Type your question..."
               className="flex-1 rounded-full px-6"
             />
-            <Button type="submit" size="icon" className="rounded-full shrink-0" disabled={isLoading || !input?.trim()}>
+            <Button type="submit" size="icon" className="rounded-full shrink-0" disabled={isLoading || !localInput?.trim()}>
               <Send className="w-4 h-4" />
             </Button>
           </form>
