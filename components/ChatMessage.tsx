@@ -1,6 +1,6 @@
 import { Bot, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { Message } from 'ai/react';
+import { Message } from '@ai-sdk/react';
 
 interface ChatMessageProps {
   message: Message;
