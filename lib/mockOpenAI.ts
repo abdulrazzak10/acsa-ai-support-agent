@@ -1,5 +1,3 @@
-import { StreamingTextResponse } from 'ai';
-
 export function createMockStream(prompt: string, context: any[]) {
     const encoder = new TextEncoder();
     
@@ -19,7 +17,9 @@ export function createMockStream(prompt: string, context: any[]) {
             const words = fullText.split(' ');
             
             for (let i = 0; i < words.length; i++) {
-                controller.enqueue(encoder.encode(words[i] + " "));
+                // Vercel AI SDK expects DataStream format (0 = text chunk)
+                const chunk = `0:${JSON.stringify(words[i] + " ")}\n`;
+                controller.enqueue(encoder.encode(chunk));
                 await new Promise(resolve => setTimeout(resolve, 50)); 
             }
             
@@ -27,5 +27,10 @@ export function createMockStream(prompt: string, context: any[]) {
         }
     });
     
-    return new StreamingTextResponse(stream);
+    return new Response(stream, {
+        headers: {
+            'Content-Type': 'text/plain; charset=utf-8',
+            'x-vercel-ai-data-stream': 'v1'
+        }
+    });
 }
